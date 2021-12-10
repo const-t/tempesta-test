@@ -427,8 +427,8 @@ class Request(HttpMessage):
             self.method, self.uri = words
         else:
             raise ParseError('Invalid request line!')
-        if not self.method in self.methods:
-            raise ParseError('Invalid request method!')
+        #if not self.method in self.methods:
+        #    raise ParseError('Invalid request method!')
 
     def get_firstline(self):
         return ' '.join([self.method, self.uri, self.version])

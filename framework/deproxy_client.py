@@ -149,13 +149,14 @@ class BaseDeproxyClient(deproxy.Client):
             if req == None:
                 break
             request_buffers.append(requests[:req.original_length])
+            requests = requests[req.original_length:]
             methods.append(req.method)
             valid_req_num += 1
-            requests = requests[req.original_length:]
 
         if len(requests) > 0:
             request_buffers.append(requests)
             methods.append("INVALID")
+            valid_req_num += 1
 
         if self.cur_req_num >= self.nrreq:
             self.nrresp = 0
