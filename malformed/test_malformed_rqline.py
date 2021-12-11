@@ -134,7 +134,7 @@ server ${general_ip}:8000;
 
     def test_03_malformed_get(self):
         request = \
-                  '+GET / HTTP/1.1\r\n' \
+                  '\tGET / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = None
@@ -145,7 +145,7 @@ server ${general_ip}:8000;
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n' \
-                  '+GET /bbb HTTP/1.1\r\n' \
+                  '\tGET /bbb HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = 'GET /aaa HTTP/1.1\r\n' \
@@ -155,7 +155,7 @@ server ${general_ip}:8000;
 
     def test_05_malformed_post(self):
         request = \
-                  'PO+T / HTTP/1.1\r\n' \
+                  'PO\tT / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = None
@@ -166,7 +166,7 @@ server ${general_ip}:8000;
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n' \
-                  'POS+T /bbb HTTP/1.1\r\n' \
+                  'POS\tT /bbb HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = 'GET /aaa HTTP/1.1\r\n' \
@@ -214,7 +214,7 @@ server ${general_ip}:8000;
 
     def test_09_malformed_get_hch(self):
         request = \
-                  '+GET / HTTP/1.1\r\n' \
+                  '\tGET / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = None
@@ -225,7 +225,7 @@ server ${general_ip}:8000;
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n' \
-                  '+GET /bbb HTTP/1.1\r\n' \
+                  '\tGET /bbb HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = 'GET /aaa HTTP/1.1\r\n' \
@@ -235,7 +235,7 @@ server ${general_ip}:8000;
 
     def test_11_malformed_post_hch(self):
         request = \
-                  'PO+T / HTTP/1.1\r\n' \
+                  'PO\tT / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = None
@@ -246,7 +246,7 @@ server ${general_ip}:8000;
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n' \
-                  'POS+T /bbb HTTP/1.1\r\n' \
+                  'POS\tT /bbb HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = 'GET /aaa HTTP/1.1\r\n' \
