@@ -1,0 +1,292 @@
+Root privileges are required: need access to module loading on localhost.
+************************************************************
+* This is a diagnistic tests rather than evaluation tests  *
+* Trust messages on screen rather than overal test results *
+************************************************************
+=====test_01_double_lf=====
+Sending request----
+
+
+GET / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+
+GET / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_02_double_lf_pipeline=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+
+GET /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+
+GET /bbb HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+Response status:200
+*** Expected: 400
+=====test_03_malformed_get=====
+Sending request----
++GET / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
++GET / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_04_malformed_get_pipeline=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
++GET /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
++GET /bbb HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+Response status:200
+*** Expected: 400
+=====test_05_malformed_post=====
+Sending request----
+PO+T / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+PO+T / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_06_malformed_post_pipeline=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
+POS+T /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+POS+T /bbb HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+Response status:200
+*** Expected: 400
+=====test_07_double_lf_hch=====
+Sending request----
+
+
+GET / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+
+GET / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_08_double_lf_pipeline_hch=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+
+GET /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+
+GET /bbb HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+Response status:200
+*** Expected: 400
+=====test_09_malformed_get_hch=====
+Sending request----
++GET / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
++GET / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_10_malformed_get_pipeline_hch=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
++GET /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+GET /aaa HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+*** Response not received
+=====test_11_malformed_post_hch=====
+Sending request----
+PO+T / HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+PO+T / HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected NONE
+Response status:200
+*** Expected: 400
+=====test_12_malformed_post_pipeline_hch=====
+Sending request----
+GET /aaa HTTP/1.1
+Host: localhost
+
+POS+T /bbb HTTP/1.1
+Host: localhost
+
+
+-------------------
+Request forwarded to backend----
+POS+T /bbb HTTP/1.1
+Host: localhost
+X-Forwarded-For: 127.0.0.1
+via: 1.1 tempesta_fw (Tempesta FW 0.7.0)
+Connection: keep-alive
+
+
+--------------------------------
+*** Expected--------------
+GET /aaa HTTP/1.1
+Host: localhost
+
+
+--------------------------
+Response status:200
+*** Expected: 400
