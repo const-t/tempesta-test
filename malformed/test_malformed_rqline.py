@@ -153,20 +153,20 @@ server ${general_ip}:8000;
                   '\r\n'
         self.common_check(request, 400, expect)
 
-    def test_05_malformed_post(self):
+    def test_05_malformed_post_2(self):
         request = \
-                  'PO\tT / HTTP/1.1\r\n' \
+                  'P\tST / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = None
         self.common_check(request, 400, expect)
 
-    def test_06_malformed_post_pipeline(self):
+    def test_06_malformed_post_2_pipeline(self):
         request = \
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n' \
-                  'POS\tT /bbb HTTP/1.1\r\n' \
+                  'P\tST /bbb HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
                   '\r\n'
         expect = 'GET /aaa HTTP/1.1\r\n' \
@@ -174,9 +174,38 @@ server ${general_ip}:8000;
                   '\r\n'
         self.common_check(request, 400, expect)
 
+    def test_07_malformed_post_3(self):
+        request = \
+                  'PO\tT / HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = None
+        self.common_check(request, 400, expect)
+
+    def test_08_malformed_post_3_pipeline(self):
+        request = \
+                  'GET /aaa HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n' \
+                  'PO\tT /bbb HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = 'GET /aaa HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        self.common_check(request, 400, expect)
+
+    def test_09_space(self):
+        request = \
+                  ' / HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = None
+        self.common_check(request, 400, expect)
+
     ##### Heavy chunked versions of the tests
 
-    def test_07_double_lf_hch(self):
+    def test_11_double_lf_hch(self):
     	# Test double LF before request
     	# Request should be rejected by the proxy
     	#
@@ -191,7 +220,7 @@ server ${general_ip}:8000;
         expect = None
         self.common_check(request, 400, expect, True)
 
-    def test_08_double_lf_pipeline_hch(self):
+    def test_12_double_lf_pipeline_hch(self):
     	# Test double LF before 2nd request in a pipeline
     	# The 1st request should be sent to backed
     	# The 2nd request should be rejected by the proxy
@@ -212,7 +241,7 @@ server ${general_ip}:8000;
                   '\r\n'
         self.common_check(request, 400, expect, True)
 
-    def test_09_malformed_get_hch(self):
+    def test_13_malformed_get_hch(self):
         request = \
                   '\tGET / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
@@ -220,7 +249,7 @@ server ${general_ip}:8000;
         expect = None
         self.common_check(request, 400, expect, True)
 
-    def test_10_malformed_get_pipeline_hch(self):
+    def test_14_malformed_get_pipeline_hch(self):
         request = \
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
@@ -233,7 +262,28 @@ server ${general_ip}:8000;
                   '\r\n'
         self.common_check(request, 400, expect, True)
 
-    def test_11_malformed_post_hch(self):
+    def test_15_malformed_post_2_hch(self):
+        request = \
+                  'P\tST / HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = None
+        self.common_check(request, 400, expect, True)
+
+    def test_16_malformed_post_2_pipeline_hch(self):
+        request = \
+                  'GET /aaa HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n' \
+                  'P\tST /bbb HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = 'GET /aaa HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        self.common_check(request, 400, expect, True)
+
+    def test_17_malformed_post_3_hch(self):
         request = \
                   'PO\tT / HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
@@ -241,7 +291,7 @@ server ${general_ip}:8000;
         expect = None
         self.common_check(request, 400, expect, True)
 
-    def test_12_malformed_post_pipeline_hch(self):
+    def test_18_malformed_post_3_pipeline_hch(self):
         request = \
                   'GET /aaa HTTP/1.1\r\n' \
                   'Host: localhost\r\n' \
@@ -254,3 +304,10 @@ server ${general_ip}:8000;
                   '\r\n'
         self.common_check(request, 400, expect, True)
 
+    def test_19_space_hch(self):
+        request = \
+                  ' / HTTP/1.1\r\n' \
+                  'Host: localhost\r\n' \
+                  '\r\n'
+        expect = None
+        self.common_check(request, 400, expect, True)
